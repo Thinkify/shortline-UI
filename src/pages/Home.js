@@ -9,7 +9,7 @@ const Find = () => {
     event.preventDefault();
     const { data } = event.target.elements;
     try {
-      const res = await findCandidate({ email: data?.value });
+      const res = await findCandidate({ email: data?.value?.trim() });
       console.log("candidate", res);
       setCandidate(res);
     } catch (error) {

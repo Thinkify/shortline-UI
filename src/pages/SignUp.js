@@ -7,7 +7,6 @@ const SignUp = ({ history }) => {
   const handleSignUp = useCallback(async event => {
     event.preventDefault();
     const { email, password , company} = event.target.elements;
-    debugger;
 
     try {
     	await createRecruter({email:email?.value, company:company?.value});
