@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
+import whatIsTheQueryKey from '../utils/findapi.utlis';
 
 const Find = () => {
   const [candidate, setCandidate] = useState("");
@@ -9,7 +10,9 @@ const Find = () => {
     event.preventDefault();
     const { data } = event.target.elements;
     try {
-      const res = await findCandidate({ email: data?.value });
+      const value = data?.value
+      var profile = whatIsTheQueryKey(value)
+      const res = await findCandidate({ [profile] : value });
       console.log("candidate", res);
       setCandidate(res);
     } catch (error) {

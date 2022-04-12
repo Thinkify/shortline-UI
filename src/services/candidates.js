@@ -6,10 +6,14 @@ const fortmatResponse = (res) => {
   return JSON.stringify(res, null, 2);
 };
 
-export async function findCandidate({email}) {
-  if (email) {
+export async function findCandidate({email,linkedInProfile}) {
+  if (email || linkedInProfile) {
+    let url = `candidates/getCandidateByAny?email=${email}`;
+    if(linkedInProfile){
+      url = `candidates/getCandidateByAny?linkedInProfile=${linkedInProfile}`;
+    } 
     try {
-      const res = await apiClient.get(`candidates/getCandidateByAny?email=${email}`);
+      const res = await apiClient.get(url);
       
       const result = res?.data?.candidate;
       if(!result){

@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
 import { useHistory, useLocation } from 'react-router';
+import whatIsTheQueryKey from '../utils/findapi.utlis';
 
 
 const Find = () => {
@@ -15,8 +16,8 @@ const Find = () => {
 
   const findAndSetCandidate = async (value) => {
     try {
-      const res = await findCandidate({ email: value });
-      console.log("candidate", res);
+      var profile = whatIsTheQueryKey(value)
+      const res = await findCandidate({ [profile] : value });
       setCandidate(res);
     } catch (error) {
       alert(error);
