@@ -1,25 +1,47 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
+import { useHistory, useLocation } from 'react-router';
+
 
 const Find = () => {
   const [candidate, setCandidate] = useState("");
+  const location = useLocation();
+  const history = useHistory();
 
-  const handleFind = async (event) => {
-    event.preventDefault();
-    const { data } = event.target.elements;
+  const params = new URLSearchParams(location.search); 
+  const hideFindBox = params.get('hf');
+  console.log('hideFindBox',hideFindBox);
+
+  const findAndSetCandidate = async (value) => {
     try {
-      const res = await findCandidate({ email: data?.value?.trim() });
+      const res = await findCandidate({ email: value });
       console.log("candidate", res);
       setCandidate(res);
     } catch (error) {
       alert(error);
+    }   
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search); 
+    const slug = params.get('find');
+    if(slug){
+      findAndSetCandidate(slug)
     }
+  }, [location?.search]);
+
+
+  const handleFind = async (event) => {
+    event.preventDefault();
+    const { data } = event.target.elements;
+    findAndSetCandidate(data?.value);
   };
 
   return (
     <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4 grid grid-cols-6 gap-6">
-      <div className="flex flex-col items-center justify-center col-span-2">
+      { !hideFindBox && 
+        <div className="flex flex-col items-center justify-center col-span-2">
         <form
           onSubmit={handleFind}
           className="bg-white shadow rounded w-full p-6 mt-4"
@@ -55,6 +77,7 @@ const Find = () => {
           </div>
         </form>
       </div>
+      }
       {candidate && (
         <div className="bg-white p-3 shadow-sm rounded-sm col-span-4">
           <div>
