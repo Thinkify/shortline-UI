@@ -15,11 +15,10 @@ export async function findCandidate({email,linkedInProfile}) {
     try {
       const res = await apiClient.get(url);
       
-      const result = res?.data?.candidate;
-      if(!result){
-        throw new Error("User not found");
+      if(res?.data?.code !== 200){
+        throw new Error(res.data.message || "user not found");
       }
-
+      const result = res?.data?.candidate;
       console.log("getRecruter",fortmatResponse(result))
       return result;
     } catch (err) {
