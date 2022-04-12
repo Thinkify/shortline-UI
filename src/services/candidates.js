@@ -1,5 +1,5 @@
 import apiClient from "../utils/api";
-import { showErrorNotification } from '../utils/toast';
+import { showErrorNotification , showSuccessNotification} from '../utils/toast';
 
 
 const fortmatResponse = (res) => {
@@ -38,6 +38,10 @@ export async function createCandidates(postData) {
             "x-access-token": "token-value",
           },
         });
+
+        if(res?.data?.code !== 200){
+          throw new Error(res.data.message || "User info already added!!");
+        }
   
         const result = {
           status: res.status + "-" + res.statusText,
@@ -46,6 +50,7 @@ export async function createCandidates(postData) {
         };
 
         console.log("createCandidates",fortmatResponse(result))
+        showSuccessNotification('Data Added Successfully!! Add more people');
         return result;
       } catch (err) {
         console.log(fortmatResponse(err.response?.data || err));
