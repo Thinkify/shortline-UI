@@ -1,5 +1,5 @@
-import React, {useRef} from "react";
-import { useForm } from "react-hook-form";
+import React, {useRef, useEffect} from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { withRouter } from "react-router";
@@ -40,15 +40,50 @@ const Apply = () => {
       .required("Phone Number is required")
       .min(10, "Please enter 10 digit number")
       .max(10, "Please enter 10 digit number"),
+    isOffersInHand: Yup.string()
+            .required('Number of offersInHand is required'),
+    offersInHand: Yup.array().of(
+            Yup.object().shape({
+                company: Yup.string()
+                    .required('company is required'),
+                offer: Yup.string()
+                    .required('offer is required')
+            }))
   });
 
   const {
     register,
+    reset,
     formState: { errors },
+    watch,
     handleSubmit,
+    control,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
+
+  const { fields, append, remove } = useFieldArray({ name: 'offersInHand', control });
+
+  // watch to enable re-render when offer number is changed
+  const isOffersInHand = watch('isOffersInHand');
+
+  useEffect(() => {
+    // update field array when ticket number changed
+    const newVal = parseInt(isOffersInHand || 0);
+    const oldVal = fields.length;
+    if (newVal > oldVal) {
+        // append offersInHand to field array
+        for (let i = oldVal; i < newVal; i++) {
+            append({ name: '', email: '' });
+        }
+    } else {
+        // remove offersInHand from field array
+        for (let i = oldVal; i > newVal; i--) {
+            remove(i - 1);
+        }
+    }
+}, [isOffersInHand]);
+
   console.log("errors;", errors);
 
   const onSubmit = async (data) => {
@@ -58,7 +93,8 @@ const Apply = () => {
     });
 
     if (responce?.data?.code == 200) {
-      formRef.current.reset();
+      // formRef.current.reset();
+      reset();
     }
 
     console.log("responce", responce);
@@ -224,6 +260,7 @@ const Apply = () => {
                       {errors?.gitHub?.message}
                     </div>
                   </div>
+
                   <div className="col-span-6 sm:col-span-3">
                     <label
                       htmlFor="linkedIn-name"
@@ -245,6 +282,31 @@ const Apply = () => {
                       {errors?.linkedInProfile?.message}
                     </div>
                   </div>
+                  <div className="col-span-12 sm:col-span-6">
+                      <label>Number of offersInHand</label>
+                      <select name="isOffersInHand" {...register('isOffersInHand')} className={`form-control ${errors.isOffersInHand ? 'is-invalid' : ''}`}>
+                          {['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i =>
+                              <option key={i} value={i}>{i}</option>
+                          )}
+                      </select>
+                      <div className="invalid-feedback">{errors.isOffersInHand?.message}</div>
+                  </div>
+                  <div className="col-span-12 sm:col-span-6">
+                  {fields.map((item, i) => (
+                    <div key={i} className="col-span-12 sm:col-span-6">
+                                <div className="col-span-6 sm:col-span-3">
+                                    <label>Company</label>
+                                    <input name={`offersInHand[${i}]company`} {...register(`offersInHand.${i}.company`)} type="text" className={`form-control ${errors.offersInHand?.[i]?.company ? 'is-invalid' : ''}`} />
+                                    <div className="invalid-feedback">{errors.offersInHand?.[i]?.company?.message}</div>
+                                </div>
+                                <div className="col-span-6 sm:col-span-3">
+                                    <label>Offer</label>
+                                    <input name={`offersInHand[${i}]offer`} {...register(`offersInHand.${i}.offer`)} type="text" className={`form-control ${errors.offersInHand?.[i]?.offer ? 'is-invalid' : ''}`} />
+                                    <div className="invalid-feedback">{errors.offersInHand?.[i]?.offer?.message}</div>
+                                </div>
+                    </div>
+                ))}
+                </div>
                 </div>
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
