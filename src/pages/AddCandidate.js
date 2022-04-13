@@ -71,7 +71,7 @@ const Apply = () => {
           <form onSubmit={handleSubmit(onSubmit)} className={"text-black"} ref={formRef}>
             <div className="shadow overflow-hidden sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
-                <div className="grid grid-cols-12 gap-6">
+                <div className="grid grid-cols-12 md:grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
                       htmlFor="first-name"
