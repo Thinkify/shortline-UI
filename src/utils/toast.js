@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 export function showErrorNotification(message = 'Something went wrong !!') {
     
     toast.error(message, {
-        position: "bottom-center",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

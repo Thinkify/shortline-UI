@@ -105,7 +105,7 @@ const Apply = () => {
       <div className="flex min-h-screen flex-col items-center justify-start py-2">
         <div className="mt-5 md:mt-0 md:col-span-2">
           <form onSubmit={handleSubmit(onSubmit)} className={"text-black"} ref={formRef}>
-            <div className="shadow overflow-hidden sm:rounded-md">
+            <div className="shadow sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-12 md:grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
@@ -299,8 +299,8 @@ const Apply = () => {
                   </div>
                   <div className="col-span-12 sm:col-span-6 grid grid-cols-6 gap-4">
                   {fields.map((item, i) => (
-                    <div key={i} className="col-span-6 sm:col-span-3">
-                                <div className="col-span-6 sm:col-span-3">
+                    <div key={i} className="col-span-6 grid grid-cols-6 gap-4">
+                                <div className="col-span-3 ">
                                     <label className="block text-sm font-medium text-gray-700">Company</label>
                                     <input 
                                       name={`offersInHand[${i}]company`} 
@@ -312,8 +312,8 @@ const Apply = () => {
                                       />
                                     <div className="text-red-500">{errors.offersInHand?.[i]?.company?.message}</div>
                                 </div>
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label className="block text-sm font-medium text-gray-700">Offer of </label>
+                                <div className="col-span-3">
+                                    <label className="block text-sm font-medium text-gray-700"> Salary offered</label>
                                     <input 
                                     name={`offersInHand[${i}]offer`} 
                                     {...register(`offersInHand.${i}.offer`)} 
