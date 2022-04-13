@@ -3,7 +3,7 @@ import React from "react";
 const AddCandidateBanner = ({onClickHandler}) => {
  
     return (
-      <div className="col-span-4 flex min-h-screen flex-col items-center justify-center py-2">
+      <div className="col-start-2 col-span-4 flex min-h-screen flex-col items-center justify-center py-2">
         <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <div className="bg-gray-50">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
