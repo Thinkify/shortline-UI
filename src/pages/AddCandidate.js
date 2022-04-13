@@ -45,9 +45,9 @@ const Apply = () => {
     offersInHand: Yup.array().of(
             Yup.object().shape({
                 company: Yup.string()
-                    .required('company is required'),
+                    .required('Company is required'),
                 offer: Yup.string()
-                    .required('offer is required')
+                    .required('Offer is required')
             }))
   });
 
@@ -294,15 +294,29 @@ const Apply = () => {
                   <div className="col-span-12 sm:col-span-6">
                   {fields.map((item, i) => (
                     <div key={i} className="col-span-12 sm:col-span-6">
-                                <div className="col-span-6 sm:col-span-3">
-                                    <label>Company</label>
-                                    <input name={`offersInHand[${i}]company`} {...register(`offersInHand.${i}.company`)} type="text" className={`form-control ${errors.offersInHand?.[i]?.company ? 'is-invalid' : ''}`} />
-                                    <div className="invalid-feedback">{errors.offersInHand?.[i]?.company?.message}</div>
+                                <div className="col-span-12 sm:col-span-6">
+                                    <label className="block text-sm font-medium text-gray-700">Company</label>
+                                    <input 
+                                      name={`offersInHand[${i}]company`} 
+                                      {...register(`offersInHand.${i}.company`)} 
+                                      type="text" 
+                                      className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
+                                        errors.offersInHand?.[i]?.company ? "is-invalid" : ""
+                                      }`} 
+                                      />
+                                    <div className="text-red-500">{errors.offersInHand?.[i]?.company?.message}</div>
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
-                                    <label>Offer</label>
-                                    <input name={`offersInHand[${i}]offer`} {...register(`offersInHand.${i}.offer`)} type="text" className={`form-control ${errors.offersInHand?.[i]?.offer ? 'is-invalid' : ''}`} />
-                                    <div className="invalid-feedback">{errors.offersInHand?.[i]?.offer?.message}</div>
+                                    <label className="block text-sm font-medium text-gray-700">Offer of </label>
+                                    <input 
+                                    name={`offersInHand[${i}]offer`} 
+                                    {...register(`offersInHand.${i}.offer`)} 
+                                    type="text" 
+                                    className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
+                                      errors.offersInHand?.[i]?.offer ? "is-invalid" : ""
+                                    }`}
+                                     />
+                                    <div className="text-red-500">{errors.offersInHand?.[i]?.offer?.message}</div>
                                 </div>
                     </div>
                 ))}
