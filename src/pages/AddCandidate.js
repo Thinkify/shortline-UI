@@ -241,16 +241,16 @@ const Apply = () => {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="github-name"
+                      htmlFor="gitHub"
                       className="block text-sm font-medium text-gray-700"
                     >
                       GitHub
                     </label>
                     <input
                       type="text"
-                      id="gitHUb"
+                      id="gitHub"
                       defaultValue={gitHub || ""}
-                      autoComplete="given-name"
+                      autoComplete="gitHub"
                       {...register("gitHub")}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
                         errors?.gitHub ? "is-invalid" : ""
@@ -282,19 +282,25 @@ const Apply = () => {
                       {errors?.linkedInProfile?.message}
                     </div>
                   </div>
-                  <div className="col-span-12 sm:col-span-6">
-                      <label>Number of offersInHand</label>
-                      <select name="isOffersInHand" {...register('isOffersInHand')} className={`form-control ${errors.isOffersInHand ? 'is-invalid' : ''}`}>
-                          {['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i =>
+                  <div className="col-span-6 sm:col-span-3">
+                      <label
+                       htmlFor="isOffersInHand"
+                       className="block text-sm font-medium text-gray-700"
+                      >Number of offersInHand</label>
+                      <select name="isOffersInHand" {...register('isOffersInHand')} 
+                      className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm form-control`}
+                      
+                      >
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i =>
                               <option key={i} value={i}>{i}</option>
                           )}
                       </select>
                       <div className="invalid-feedback">{errors.isOffersInHand?.message}</div>
                   </div>
-                  <div className="col-span-12 sm:col-span-6">
+                  <div className="col-span-12 sm:col-span-6 grid grid-cols-6 gap-4">
                   {fields.map((item, i) => (
-                    <div key={i} className="col-span-12 sm:col-span-6">
-                                <div className="col-span-12 sm:col-span-6">
+                    <div key={i} className="col-span-6 sm:col-span-3">
+                                <div className="col-span-6 sm:col-span-3">
                                     <label className="block text-sm font-medium text-gray-700">Company</label>
                                     <input 
                                       name={`offersInHand[${i}]company`} 

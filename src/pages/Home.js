@@ -150,6 +150,20 @@ const Find = () => {
                   <div className="px-4 py-2 font-semibold">Github</div>
                   <div className="px-4 py-2">{candidate?.gitHub}</div>
                 </div>
+                {
+                  candidate.offersInHand && 
+                  (<div className="grid grid-cols-2">
+                  <div className="px-4 py-2 font-semibold">Offer Candidate have</div>
+
+                    {
+                      candidate.offersInHand.map(offers => <div className={"px-4 py-2 "} id={offers.company}>
+                            Has offer from <span className="font-semibold">{offers.company}</span> of 
+                            <span className="py-2">{offers.offer}</span>
+                      </div>)
+                    }
+              
+                </div>)
+                }
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">
                     Last updated time
