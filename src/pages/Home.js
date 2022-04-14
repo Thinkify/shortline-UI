@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
-import AddCandidateBanner from '../components/AddCandidateBanner'
 import { useHistory, useLocation } from "react-router";
+import AddCandidateBanner from '../components/AddCandidateBanner'
+import SkillView from '../components/SkillView'
 import whatIsTheQueryKey from "../utils/findapi.utlis";
+import data from "../utils/demo";
 
 const Find = () => {
   const [candidate, setCandidate] = useState("");
@@ -95,7 +97,7 @@ const Find = () => {
         </div>
       )}
       {candidate?.email && (
-        <div className="bg-white p-3 shadow-sm rounded-sm col-span-4">
+        <div className={`bg-white p-3 shadow-sm rounded-sm ${(candidate?.email && hideFindBox) ? 'col-span-6' : 'col-span-4'}`}>
           <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
@@ -178,6 +180,7 @@ const Find = () => {
               Edit Information
             </button>
           </div>
+          <SkillView data={data} />
         </div>
       )}
       {candidateEmptyError && (
