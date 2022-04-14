@@ -12,7 +12,6 @@ const Find = () => {
   const [candidateSearch, setCandidateSearch] = useState("");
   const [candidateEmptyError, setCandidateEmptyError] = useState(false);
 
-
   const location = useLocation();
   const history = useHistory();
 
@@ -97,7 +96,7 @@ const Find = () => {
         </div>
       )}
       {candidate?.email && (
-        <div className={`bg-white p-3 shadow-sm rounded-sm ${(candidate?.email && hideFindBox) ? 'col-span-6' : 'col-span-4'}`}>
+        <div className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${(candidate?.email && hideFindBox) ? 'col-span-6' : 'col-span-4'}`}>
           <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">

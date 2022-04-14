@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Accordion from './Accordion';
 
 const SkillView = ({ data }) => {
     const [openAccodingId, setOpenAccodingId] = useState(-1);
@@ -54,6 +55,7 @@ const SkillView = ({ data }) => {
     };
 
     const getRatingBar = rating => {
+        console.log('rating:',rating);
         if (rating <= 100 && rating > 91)
             return (
                 <span
@@ -106,7 +108,7 @@ const SkillView = ({ data }) => {
                                             >
                                                 <span className={"col-span-4"}>
                                                     <i class="fas fa-chevron-down my-1 mr-2 text-gray-400"></i>
-                                                    <span className="text-lg text-gray-600">{info.topic}</span>
+                                                    <span className="text-lg text-gray-600 font-semibold">{info.topic}</span>
                                                 </span>
                                                 <span className={"col-span-4"}>
                                                      {renderStars(9 * 10)}
