@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
-import AddCandidateBanner from '../components/AddCandidateBanner'
 import { useHistory, useLocation } from "react-router";
+import AddCandidateBanner from '../components/AddCandidateBanner'
+import SkillView from '../components/SkillView'
 import whatIsTheQueryKey from "../utils/findapi.utlis";
+import data from "../utils/demo";
 
 const Find = () => {
   const [candidate, setCandidate] = useState("");
   const [candidateSearch, setCandidateSearch] = useState("");
   const [candidateEmptyError, setCandidateEmptyError] = useState(false);
-
 
   const location = useLocation();
   const history = useHistory();
@@ -95,7 +96,7 @@ const Find = () => {
         </div>
       )}
       {candidate?.email && (
-        <div className="bg-white p-3 shadow-sm rounded-sm col-span-4">
+        <div className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${(candidate?.email && hideFindBox) ? 'col-span-6' : 'col-span-4'}`}>
           <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
@@ -150,6 +151,20 @@ const Find = () => {
                   <div className="px-4 py-2 font-semibold">Github</div>
                   <div className="px-4 py-2">{candidate?.gitHub}</div>
                 </div>
+                {
+                  candidate.offersInHand && 
+                  (<div className="grid grid-cols-2">
+                  <div className="px-4 py-2 font-semibold">Offer Candidate have</div>
+
+                    {
+                      candidate.offersInHand.map(offers => <div className={"px-4 py-2 "} id={offers.company}>
+                            Has offer from <span className="font-semibold">{offers.company}</span> of 
+                            <span className="py-2">{offers.offer}</span>
+                      </div>)
+                    }
+              
+                </div>)
+                }
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">
                     Last updated time
@@ -164,6 +179,7 @@ const Find = () => {
               Edit Information
             </button>
           </div>
+          <SkillView data={data} />
         </div>
       )}
       {candidateEmptyError && (

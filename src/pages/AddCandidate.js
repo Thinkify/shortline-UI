@@ -1,15 +1,14 @@
-import React, {useRef} from "react";
-import { useForm } from "react-hook-form";
+import React, {useRef, useEffect} from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { withRouter } from "react-router";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import { createCandidates } from "../services/candidates";
 
 const Apply = () => {
 
   const location = useLocation();
-  const history = useHistory();
   const formRef = useRef();
 
   const { search } = location;
@@ -40,15 +39,50 @@ const Apply = () => {
       .required("Phone Number is required")
       .min(10, "Please enter 10 digit number")
       .max(10, "Please enter 10 digit number"),
+    isOffersInHand: Yup.string()
+            .required('Number of offersInHand is required'),
+    offersInHand: Yup.array().of(
+            Yup.object().shape({
+                company: Yup.string()
+                    .required('Company is required'),
+                offer: Yup.string()
+                    .required('Offer is required')
+            }))
   });
 
   const {
     register,
+    reset,
     formState: { errors },
+    watch,
     handleSubmit,
+    control,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
+
+  const { fields, append, remove } = useFieldArray({ name: 'offersInHand', control });
+
+  // watch to enable re-render when offer number is changed
+  const isOffersInHand = watch('isOffersInHand');
+
+  useEffect(() => {
+    // update field array when ticket number changed
+    const newVal = parseInt(isOffersInHand || 0);
+    const oldVal = fields.length;
+    if (newVal > oldVal) {
+        // append offersInHand to field array
+        for (let i = oldVal; i < newVal; i++) {
+            append({ name: '', email: '' });
+        }
+    } else {
+        // remove offersInHand from field array
+        for (let i = oldVal; i > newVal; i--) {
+            remove(i - 1);
+        }
+    }
+}, [isOffersInHand]);
+
   console.log("errors;", errors);
 
   const onSubmit = async (data) => {
@@ -58,7 +92,8 @@ const Apply = () => {
     });
 
     if (responce?.data?.code == 200) {
-      formRef.current.reset();
+      // formRef.current.reset();
+      reset();
     }
 
     console.log("responce", responce);
@@ -69,7 +104,7 @@ const Apply = () => {
       <div className="flex min-h-screen flex-col items-center justify-start py-2">
         <div className="mt-5 md:mt-0 md:col-span-2">
           <form onSubmit={handleSubmit(onSubmit)} className={"text-black"} ref={formRef}>
-            <div className="shadow overflow-hidden sm:rounded-md">
+            <div className="shadow sm:rounded-md">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-12 md:grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
@@ -205,16 +240,16 @@ const Apply = () => {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="github-name"
+                      htmlFor="gitHub"
                       className="block text-sm font-medium text-gray-700"
                     >
                       GitHub
                     </label>
                     <input
                       type="text"
-                      id="gitHUb"
+                      id="gitHub"
                       defaultValue={gitHub || ""}
-                      autoComplete="given-name"
+                      autoComplete="gitHub"
                       {...register("gitHub")}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
                         errors?.gitHub ? "is-invalid" : ""
@@ -224,6 +259,7 @@ const Apply = () => {
                       {errors?.gitHub?.message}
                     </div>
                   </div>
+
                   <div className="col-span-6 sm:col-span-3">
                     <label
                       htmlFor="linkedIn-name"
@@ -245,6 +281,51 @@ const Apply = () => {
                       {errors?.linkedInProfile?.message}
                     </div>
                   </div>
+                  <div className="col-span-6 sm:col-span-3">
+                      <label
+                       htmlFor="isOffersInHand"
+                       className="block text-sm font-medium text-gray-700"
+                      >Number of offersInHand</label>
+                      <select name="isOffersInHand" {...register('isOffersInHand')} 
+                      className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm form-control`}
+                      
+                      >
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i =>
+                              <option key={i} value={i}>{i}</option>
+                          )}
+                      </select>
+                      <div className="invalid-feedback">{errors.isOffersInHand?.message}</div>
+                  </div>
+                  <div className="col-span-12 sm:col-span-6 grid grid-cols-6 gap-4">
+                  {fields.map((item, i) => (
+                    <div key={i} className="col-span-6 grid grid-cols-6 gap-4">
+                                <div className="col-span-3 ">
+                                    <label className="block text-sm font-medium text-gray-700">Company</label>
+                                    <input 
+                                      name={`offersInHand[${i}]company`} 
+                                      {...register(`offersInHand.${i}.company`)} 
+                                      type="text" 
+                                      className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
+                                        errors.offersInHand?.[i]?.company ? "is-invalid" : ""
+                                      }`} 
+                                      />
+                                    <div className="text-red-500">{errors.offersInHand?.[i]?.company?.message}</div>
+                                </div>
+                                <div className="col-span-3">
+                                    <label className="block text-sm font-medium text-gray-700"> Salary offered</label>
+                                    <input 
+                                    name={`offersInHand[${i}]offer`} 
+                                    {...register(`offersInHand.${i}.offer`)} 
+                                    type="text" 
+                                    className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
+                                      errors.offersInHand?.[i]?.offer ? "is-invalid" : ""
+                                    }`}
+                                     />
+                                    <div className="text-red-500">{errors.offersInHand?.[i]?.offer?.message}</div>
+                                </div>
+                    </div>
+                ))}
+                </div>
                 </div>
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
