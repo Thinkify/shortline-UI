@@ -3,12 +3,11 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { withRouter } from "react-router";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import { createCandidates } from "../services/candidates";
 
 const Apply = () => {
   const location = useLocation();
-  const history = useHistory();
   const formRef = useRef();
 
   const { search } = location;
