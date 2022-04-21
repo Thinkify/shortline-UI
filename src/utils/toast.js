@@ -14,7 +14,7 @@ export function showErrorNotification(message = 'Something went wrong !!') {
         });
 };
 
-export function showSuccessNotification(message = 'Something went wrong !!') {
+export function showSuccessNotification(message = 'Awesome !!') {
     
       toast.success(message, {
         position: "top-right",
@@ -25,5 +25,4 @@ export function showSuccessNotification(message = 'Something went wrong !!') {
         draggable: true,
         progress: undefined,
         });
-}
-  
+};
