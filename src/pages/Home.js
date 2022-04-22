@@ -107,7 +107,7 @@ const Find = () => {
           }`}
         >
           <div>
-            <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+            <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
                 <svg
                   className="h-5"
@@ -124,12 +124,34 @@ const Find = () => {
                   />
                 </svg>
               </span>
-              <span className="tracking-wide">{candidate?.name}</span>
+              <span className="tracking-wide capitalize">
+                {candidate?.name}
+              </span>
+              {candidate.linkedInProfile && (
+                <a
+                  href={`https://www.linkedin.com/in/${candidate.linkedInProfile}/`}
+                >
+                  <img
+                    className="h-5 w-5 inline-block"
+                    src="/images/linkendin.png"
+                    alt=""
+                  />
+                </a>
+              )}
+              {candidate.gitHub && (
+                <a href={`https://github.com/${candidate.gitHub}/`}>
+                  <img
+                    className="h-5 w-5 inline-block"
+                    src="/images/gitHub.png"
+                    alt=""
+                  />
+                </a>
+              )}
             </div>
             <div className="text-gray-700">
               <div className="grid md:grid-cols-2 text-sm">
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">email</div>
+                  <div className="px-4 py-2 font-semibold">Email</div>
                   <div className="px-4 py-2">
                     <a
                       className="text-blue-800"
@@ -144,21 +166,12 @@ const Find = () => {
                   <div className="px-4 py-2">{candidate?.contact}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">currentSalary</div>
+                  <div className="px-4 py-2 font-semibold">Current Salary</div>
                   <div className="px-4 py-2">{candidate?.currentSalary}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">expectedSalary</div>
+                  <div className="px-4 py-2 font-semibold">Expected Salary</div>
                   <div className="px-4 py-2">{candidate?.expectedSalary}</div>
-                </div>
-
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">linkedInProfile</div>
-                  <div className="px-4 py-2">{candidate?.linkedInProfile}</div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Github</div>
-                  <div className="px-4 py-2">{candidate?.gitHub}</div>
                 </div>
                 {candidate.offersInHand && (
                   <div className="grid grid-cols-2">
@@ -168,7 +181,6 @@ const Find = () => {
                     <div>
                       {candidate.offersInHand.map((offers) => (
                         <div className={'px-4 py-2 '} id={offers.company}>
-                          Has offer from{' '}
                           <img
                             className="h-5 w-5 inline-block"
                             src={`/images/${
@@ -179,8 +191,7 @@ const Find = () => {
                           <span className="font-semibold">
                             {offers.company}
                           </span>{' '}
-                          of
-                          <span className="py-2">{offers.offer}</span>
+                          of <span className="py-2">{offers.offer}</span>
                         </div>
                       ))}
                     </div>
