@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { withRouter } from "react-router";
-import { useLocation } from "react-router";
-import { createCandidates } from "../services/candidates";
+import React, { useRef, useEffect } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { withRouter } from 'react-router';
+import { useLocation } from 'react-router';
+import { createCandidates } from '../services/candidates';
 
 const Apply = () => {
   const location = useLocation();
@@ -15,34 +15,34 @@ const Apply = () => {
   let query = new URLSearchParams(search);
 
   const queryUrl = {
-    name: query.get("name") || "",
-    gitHub: query.get("gitHub") || "",
-    linkedInProfile: query.get("linkedInProfile") || "",
-    contact: query.get("contact") || "",
-    email: query.get("email") || "",
-    currentSalary: query.get("currentSalary") || "",
+    name: query.get('name') || '',
+    gitHub: query.get('gitHub') || '',
+    linkedInProfile: query.get('linkedInProfile') || '',
+    contact: query.get('contact') || '',
+    email: query.get('email') || '',
+    currentSalary: query.get('currentSalary') || '',
   };
 
   let { name, linkedInProfile, contact, gitHub, email, currentSalary } =
     queryUrl;
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    currentSalary: Yup.string().required("Current CTC is required"),
-    expectedSalary: Yup.string().required("Expected CTC is required"),
-    noticePeriod: Yup.string().required("NoticePeriod is required"),
-    linkedInProfile: Yup.string().required("LinkedIn is required"),
-    gitHub: Yup.string().required("GitHub is required"),
-    email: Yup.string().required("Email is required").email("Email is invalid"),
+    name: Yup.string().required('Name is required'),
+    currentSalary: Yup.string().required('Current CTC is required'),
+    expectedSalary: Yup.string().required('Expected CTC is required'),
+    noticePeriod: Yup.string().required('NoticePeriod is required'),
+    linkedInProfile: Yup.string().required('LinkedIn is required'),
+    gitHub: Yup.string().required('GitHub is required'),
+    email: Yup.string().required('Email is required').email('Email is invalid'),
     contact: Yup.string()
-      .required("Phone Number is required")
-      .min(10, "Please enter 10 digit number")
-      .max(10, "Please enter 10 digit number"),
-    isOffersInHand: Yup.string().required("Number of offersInHand is required"),
+      .required('Phone Number is required')
+      .min(10, 'Please enter 10 digit number')
+      .max(10, 'Please enter 10 digit number'),
+    isOffersInHand: Yup.string().required('Number of offersInHand is required'),
     offersInHand: Yup.array().of(
       Yup.object().shape({
-        company: Yup.string().required("Company is required"),
-        offer: Yup.string().required("Offer is required"),
+        company: Yup.string().required('Company is required'),
+        offer: Yup.string().required('Offer is required'),
       })
     ),
   });
@@ -59,12 +59,12 @@ const Apply = () => {
   });
 
   const { fields, append, remove } = useFieldArray({
-    name: "offersInHand",
+    name: 'offersInHand',
     control,
   });
 
   // watch to enable re-render when offer number is changed
-  const isOffersInHand = watch("isOffersInHand");
+  const isOffersInHand = watch('isOffersInHand');
 
   useEffect(() => {
     // update field array when ticket number changed
@@ -73,7 +73,7 @@ const Apply = () => {
     if (newVal > oldVal) {
       // append offersInHand to field array
       for (let i = oldVal; i < newVal; i++) {
-        append({ name: "", email: "" });
+        append({ name: '', email: '' });
       }
     } else {
       // remove offersInHand from field array
@@ -83,7 +83,7 @@ const Apply = () => {
     }
   }, [isOffersInHand]);
 
-  console.log("errors;", errors);
+  console.log('errors;', errors);
 
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data, null, 2));
@@ -96,16 +96,16 @@ const Apply = () => {
       reset();
     }
 
-    console.log("responce", responce);
+    console.log('responce', responce);
   };
 
   return (
-    <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
-      <div className="flex min-h-screen flex-col items-center justify-start py-2">
+    <div className="h-full w-full py-4 px-4">
+      <div className="flex flex-col items-center justify-start py-2">
         <div className="mt-5 md:mt-0 md:col-span-2">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className={"text-black"}
+            className={'text-black'}
             ref={formRef}
           >
             <div className="shadow sm:rounded-md">
@@ -121,11 +121,11 @@ const Apply = () => {
                     <input
                       type="text"
                       id="first-name"
-                      defaultValue={name || ""}
+                      defaultValue={name || ''}
                       autoComplete="given-name"
-                      {...register("name")}
+                      {...register('name')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.name ? "is-invalid" : ""
+                        errors?.name ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">{errors?.name?.message}</div>
@@ -140,11 +140,11 @@ const Apply = () => {
                     <input
                       type="text"
                       id="contact"
-                      defaultValue={contact || ""}
+                      defaultValue={contact || ''}
                       autoComplete="given-name"
-                      {...register("contact")}
+                      {...register('contact')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.contact ? "is-invalid" : ""
+                        errors?.contact ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">
@@ -161,11 +161,11 @@ const Apply = () => {
                     <input
                       type="email"
                       id="email-address"
-                      defaultValue={email || ""}
+                      defaultValue={email || ''}
                       autoComplete="email"
-                      {...register("email")}
+                      {...register('email')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.email ? "is-invalid" : ""
+                        errors?.email ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">{errors?.email?.message}</div>
@@ -181,10 +181,10 @@ const Apply = () => {
                       type="text"
                       id="first-name"
                       autoComplete="given-name"
-                      defaultValue={currentSalary || ""}
-                      {...register("currentSalary")}
+                      defaultValue={currentSalary || ''}
+                      {...register('currentSalary')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.currentSalary ? "is-invalid" : ""
+                        errors?.currentSalary ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">
@@ -202,9 +202,9 @@ const Apply = () => {
                       type="text"
                       id="expectedSalary"
                       autoComplete="given-name"
-                      {...register("expectedSalary")}
+                      {...register('expectedSalary')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.expectedSalary ? "is-invalid" : ""
+                        errors?.expectedSalary ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">
@@ -220,11 +220,11 @@ const Apply = () => {
                       Notice Period
                     </label>
                     <select
-                      {...register("noticePeriod", { required: true })}
+                      {...register('noticePeriod', { required: true })}
                       id="noticePeriod"
                       name="noticePeriod"
                       className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm form-control ${
-                        errors?.noticePeriod ? "is-invalid" : ""
+                        errors?.noticePeriod ? 'is-invalid' : ''
                       }`}
                     >
                       <option value="immediate">immediate</option>
@@ -253,11 +253,11 @@ const Apply = () => {
                     <input
                       type="text"
                       id="gitHub"
-                      defaultValue={gitHub || ""}
+                      defaultValue={gitHub || ''}
                       autoComplete="gitHub"
-                      {...register("gitHub")}
+                      {...register('gitHub')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.gitHub ? "is-invalid" : ""
+                        errors?.gitHub ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">
@@ -275,11 +275,11 @@ const Apply = () => {
                     <input
                       type="text"
                       id="linkedInProfile"
-                      defaultValue={linkedInProfile || ""}
+                      defaultValue={linkedInProfile || ''}
                       autoComplete="given-linkedInProfile"
-                      {...register("linkedInProfile")}
+                      {...register('linkedInProfile')}
                       className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
-                        errors?.linkedInProfile ? "is-invalid" : ""
+                        errors?.linkedInProfile ? 'is-invalid' : ''
                       }`}
                     />
                     <div className="text-red-500">
@@ -295,7 +295,7 @@ const Apply = () => {
                     </label>
                     <select
                       name="isOffersInHand"
-                      {...register("isOffersInHand")}
+                      {...register('isOffersInHand')}
                       className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm form-control`}
                     >
                       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
@@ -324,8 +324,8 @@ const Apply = () => {
                             type="text"
                             className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
                               errors.offersInHand?.[i]?.company
-                                ? "is-invalid"
-                                : ""
+                                ? 'is-invalid'
+                                : ''
                             }`}
                           />
                           <div className="text-red-500">
@@ -334,7 +334,7 @@ const Apply = () => {
                         </div>
                         <div className="col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            {" "}
+                            {' '}
                             Salary offered
                           </label>
                           <input
@@ -343,8 +343,8 @@ const Apply = () => {
                             type="text"
                             className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
                               errors.offersInHand?.[i]?.offer
-                                ? "is-invalid"
-                                : ""
+                                ? 'is-invalid'
+                                : ''
                             }`}
                           />
                           <div className="text-red-500">
