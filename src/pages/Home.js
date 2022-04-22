@@ -165,21 +165,24 @@ const Find = () => {
                     <div className="px-4 py-2 font-semibold">
                       Offer Candidate have
                     </div>
-
-                    {candidate.offersInHand.map((offers) => (
-                      <div className={"px-4 py-2 "} id={offers.company}>
-                        Has offer from{" "}
-                        <img
-                          className="h-5 w-5 inline-block"
-                          src={`/images/${
-                            images[offers.company.toLowerCase()]
-                          }`}
-                        />
-                        <span className="font-semibold">{offers.company}</span>{" "}
-                        of
-                        <span className="py-2">{offers.offer}</span>
-                      </div>
-                    ))}
+                    <div>
+                      {candidate.offersInHand.map((offers) => (
+                        <div className={"px-4 py-2 "} id={offers.company}>
+                          Has offer from{" "}
+                          <img
+                            className="h-5 w-5 inline-block"
+                            src={`/images/${
+                              images[offers.company.toLowerCase()]
+                            }`}
+                          />
+                          <span className="font-semibold">
+                            {offers.company}
+                          </span>{" "}
+                          of
+                          <span className="py-2">{offers.offer}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
                 <div className="grid grid-cols-2">
