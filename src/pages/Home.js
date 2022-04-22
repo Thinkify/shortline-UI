@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import { findCandidate } from "../services/candidates";
 import { useHistory, useLocation } from "react-router";
-import AddCandidateBanner from '../components/AddCandidateBanner'
-import SkillView from '../components/SkillView'
+import AddCandidateBanner from "../components/AddCandidateBanner";
+import SkillView from "../components/SkillView";
 import whatIsTheQueryKey from "../utils/findapi.utlis";
 import data from "../utils/demo";
+
+const images = {
+  flipkart: "flipkart.png",
+  amazon: "amazon.png",
+};
 
 const Find = () => {
   const [candidate, setCandidate] = useState("");
@@ -20,21 +25,21 @@ const Find = () => {
 
   const goToAddIngo = () => {
     debugger;
-	const key = Object.keys(candidateSearch);
-	history.push(`/add?${key[0]}=${candidateSearch[key[0]]}`);
-  }
+    const key = Object.keys(candidateSearch);
+    history.push(`/add?${key[0]}=${candidateSearch[key[0]]}`);
+  };
 
   const findAndSetCandidate = async (value) => {
     try {
       var profile = whatIsTheQueryKey(value);
-	  setCandidateSearch({ [profile]: value });
+      setCandidateSearch({ [profile]: value });
       const res = await findCandidate({ [profile]: value });
       if (res.message) {
-		  setCandidateEmptyError(true);
-		  setCandidate('');
+        setCandidateEmptyError(true);
+        setCandidate("");
       } else {
         setCandidate(res);
-		setCandidateEmptyError(false);
+        setCandidateEmptyError(false);
       }
     } catch (error) {
       alert(error);
@@ -96,7 +101,11 @@ const Find = () => {
         </div>
       )}
       {candidate?.email && (
-        <div className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${(candidate?.email && hideFindBox) ? 'col-span-6' : 'col-span-4'}`}>
+        <div
+          className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${
+            candidate?.email && hideFindBox ? "col-span-6" : "col-span-4"
+          }`}
+        >
           <div>
             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
@@ -151,20 +160,31 @@ const Find = () => {
                   <div className="px-4 py-2 font-semibold">Github</div>
                   <div className="px-4 py-2">{candidate?.gitHub}</div>
                 </div>
-                {
-                  candidate.offersInHand && 
-                  (<div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Offer Candidate have</div>
-
-                    {
-                      candidate.offersInHand.map(offers => <div className={"px-4 py-2 "} id={offers.company}>
-                            Has offer from <span className="font-semibold">{offers.company}</span> of 
-                            <span className="py-2">{offers.offer}</span>
-                      </div>)
-                    }
-              
-                </div>)
-                }
+                {candidate.offersInHand && (
+                  <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">
+                      Offer Candidate have
+                    </div>
+                    <div>
+                      {candidate.offersInHand.map((offers) => (
+                        <div className={"px-4 py-2 "} id={offers.company}>
+                          Has offer from{" "}
+                          <img
+                            className="h-5 w-5 inline-block"
+                            src={`/images/${
+                              images[offers.company.toLowerCase()]
+                            }`}
+                          />
+                          <span className="font-semibold">
+                            {offers.company}
+                          </span>{" "}
+                          of
+                          <span className="py-2">{offers.offer}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">
                     Last updated time
@@ -183,7 +203,7 @@ const Find = () => {
         </div>
       )}
       {candidateEmptyError && (
-        <AddCandidateBanner onClickHandler={goToAddIngo}/>
+        <AddCandidateBanner onClickHandler={goToAddIngo} />
       )}
     </div>
   );
