@@ -6,6 +6,8 @@ import AddCandidateBanner from '../components/AddCandidateBanner';
 import SkillView from '../components/SkillView';
 import whatIsTheQueryKey from '../utils/findapi.utlis';
 import data from '../utils/demo';
+import { Avatar } from '@mui/material';
+import { stringAvatar, stringToColor } from '../utils/mui.utils';
 
 const images = {
   flipkart: 'flipkart.png',
@@ -109,23 +111,21 @@ const Find = () => {
           <div>
             <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
-                <svg
-                  className="h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+                <Avatar
+                  {...stringAvatar(candidate.name || '')}
+                  sx={{
+                    width: 30,
+                    height: 30,
+                    bgcolor: stringToColor(candidate.name || ''),
+                    fontSize: 16,
+                  }}
+                />
               </span>
               <span className="tracking-wide capitalize">
                 {candidate?.name}
+              </span>
+              <span>
+                <i className="fas fa-edit" />
               </span>
               {candidate.linkedInProfile && (
                 <a
@@ -207,9 +207,6 @@ const Find = () => {
                 </div>
               </div>
             </div>
-            <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-              Edit Information
-            </button>
           </div>
           <SkillView data={data} />
         </div>

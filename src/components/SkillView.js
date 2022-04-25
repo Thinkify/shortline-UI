@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const SkillView = ({ data }) => {
   const [openAccodingId, setOpenAccodingId] = useState(-1);
@@ -13,41 +13,30 @@ const SkillView = ({ data }) => {
   };
 
   const renderStars = (rating) => {
-    var stars = [];
+    const stars = [];
+    let yellow = 0;
 
-    if (rating <= 100 && rating > 91)
-      for (let i = 0; i < 5; i++) {
-        stars.push(<i className="fas fa-star mr-1 text-yellow-400" />);
-      }
-    if (rating <= 90 && rating > 71) {
-      for (let i = 0; i < 4; i++) {
-        stars.push(<i className="fas fa-star mr-1 text-yellow-400" />);
-      }
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
+    if (rating <= 100 && rating > 91) {
+      yellow = 5;
+    } else if (rating <= 90 && rating > 71) {
+      yellow = 4;
+    } else if (rating <= 70 && rating > 51) {
+      yellow = 3;
+    } else if (rating <= 50 && rating > 36) {
+      yellow = 2;
+    } else {
+      yellow = 1;
     }
-    if (rating <= 70 && rating > 51) {
-      for (let i = 0; i < 3; i++) {
-        stars.push(<i className="fas fa-star mr-1 text-yellow-400" />);
-      }
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-    }
-    if (rating <= 50 && rating > 36) {
-      for (let i = 0; i < 2; i++) {
-        stars.push(<i className="fas fa-star mr-1 text-yellow-400" />);
-      }
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-    }
-    if (rating <= 35) {
-      for (let i = 0; i < 1; i++) {
-        stars.push(<i className="fas fa-star mr-1 text-yellow-400" />);
-      }
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
-      stars.push(<i className="fas fa-star mr-1 text-gray-400" />);
+
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <i
+          className={`fas fa-star mr-1 text-${
+            yellow >= i ? 'yellow' : 'gray'
+          }-400`}
+          key={i}
+        />
+      );
     }
 
     return <div>{stars}</div>;
@@ -61,13 +50,13 @@ const SkillView = ({ data }) => {
           className={'w-12 h-3 bg-purple-600 inline-block rounded-lg mr-4'}
         ></span>
       );
-    if (rating <= 90 && rating > 71)
+    else if (rating <= 90 && rating > 71)
       return (
         <span
           className={'w-12 h-3 bg-green-600 inline-block rounded-lg mr-4'}
         ></span>
       );
-    if (rating <= 70)
+    else
       return (
         <span
           className={'w-12 h-3 bg-orange inline-block rounded-lg mr-4'}
@@ -88,17 +77,24 @@ const SkillView = ({ data }) => {
             {data &&
               data?.length &&
               data.map((range, i) => (
-                <div>
-                  {range?.wide_range?.map((info) => (
-                    <div className="relative border-t border-gray-200">
+                <div key={i}>
+                  {range?.wide_range?.map((info, index) => (
+                    <div
+                      className="relative border-t border-gray-200"
+                      key={info.topic}
+                    >
                       <button
                         type="button"
                         className="w-full px-0 py-6 text-left"
-                        onClick={(e) => handleClick(e, i)}
+                        onClick={(e) => handleClick(e, index)}
                       >
                         <div className={'grid grid-cols-12 mt-4'}>
                           <span className={'col-span-4'}>
-                            <i className="fas fa-chevron-down my-1 mr-2 text-gray-400"></i>
+                            {openAccodingId === index ? (
+                              <i className="fas fa-chevron-up my-1 mr-2 text-gray-400" />
+                            ) : (
+                              <i className="fas fa-chevron-down my-1 mr-2 text-gray-400" />
+                            )}
                             <span className="text-lg text-gray-600 font-semibold">
                               {info.topic}
                             </span>
@@ -112,14 +108,14 @@ const SkillView = ({ data }) => {
 
                       <div
                         className={`pl-4 border-b border-gray-200 relative overflow-auto transition-all duration-700 ${
-                          openAccodingId === i ? 'h-auto' : 'h-0'
+                          openAccodingId === index ? 'h-auto' : 'h-0'
                         }`}
                       >
                         <div className="grid grid-cols-12 ">
                           <div className={'col-span-8'}>
                             <div className={' grid grid-cols-2 '}>
                               {info.concepts.map((subtopic) => (
-                                <>
+                                <React.Fragment key={subtopic.name}>
                                   <span className={'col-span-1'}>
                                     {subtopic.name}
                                   </span>
@@ -128,7 +124,7 @@ const SkillView = ({ data }) => {
                                     {subtopic.rating * 10}
                                     {'%'}
                                   </span>
-                                </>
+                                </React.Fragment>
                               ))}
                             </div>
                           </div>
