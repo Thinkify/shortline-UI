@@ -31,9 +31,9 @@ const SkillView = ({ data }) => {
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <i
-          className={`fas fa-star mr-1 text-${
-            yellow >= i ? 'yellow' : 'gray'
-          }-400`}
+          className={`fas fa-star mr-1 ${
+            yellow >= i ? 'text-yellow-400' : 'text-gray-400'
+          }`}
           key={i}
         />
       );
