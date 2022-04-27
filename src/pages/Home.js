@@ -146,7 +146,7 @@ const Find = () => {
                 <a href={`https://github.com/${candidate.gitHub}/`}>
                   <img
                     className="h-5 w-5 inline-block"
-                    src="/images/gitHub.png"
+                    src="/images/github.png"
                     alt=""
                   />
                 </a>
