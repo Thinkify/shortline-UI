@@ -62,6 +62,10 @@ const Find = () => {
     findAndSetCandidate(data?.value);
   };
 
+  const handleEdit = () => {
+    history.push(`/update/${candidate.email}`);
+  };
+
   return (
     <div className="h-full w-full py-4 px-4">
       {!hideFindBox && (
@@ -124,7 +128,7 @@ const Find = () => {
               <span className="tracking-wide capitalize">
                 {candidate?.name}
               </span>
-              <span>
+              <span onClick={handleEdit} className="cursor-pointer">
                 <i className="fas fa-edit" />
               </span>
               {candidate.linkedInProfile && (

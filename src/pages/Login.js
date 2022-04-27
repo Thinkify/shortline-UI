@@ -12,7 +12,7 @@ const Login = ({ history }) => {
         await app
           .auth()
           .signInWithEmailAndPassword(email.value, password.value);
-        history.push('/');
+        history.push('/recommanded/candidates');
       } catch (error) {
         alert(error);
       }
@@ -27,11 +27,11 @@ const Login = ({ history }) => {
   }
 
   return (
-    <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4">
+    <div className="h-full w-full py-4 px-4">
       <div className="flex flex-col items-center justify-center">
         <form
           onSubmit={handleLogin}
-          className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-6 mt-4"
+          className="bg-white rounded lg:w-1/3  md:w-1/2 w-full p-6 mt-4"
         >
           <p
             tabIndex="0"
@@ -104,10 +104,10 @@ const Login = ({ history }) => {
               type="email"
               name="email"
               placeholder="Email"
-              className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              className="border border-slate-300 rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
             />
           </div>
-          <div className="mt-6  w-full">
+          <div className="mt-6 w-full">
             <label
               for="pass"
               className="text-sm font-medium leading-none text-gray-800"
@@ -119,9 +119,8 @@ const Login = ({ history }) => {
                 id="pass"
                 type="password"
                 name="password"
-                type="password"
                 placeholder="Password"
-                className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                className="border-slate-300 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
               <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                 <svg
