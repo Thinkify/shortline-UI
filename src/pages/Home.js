@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router";
-import { findCandidate } from "../services/candidates";
-import { useHistory, useLocation } from "react-router";
-import AddCandidateBanner from "../components/AddCandidateBanner";
-import SkillView from "../components/SkillView";
-import whatIsTheQueryKey from "../utils/findapi.utlis";
-import data from "../utils/demo";
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router';
+import { findCandidate } from '../services/candidates';
+import { useHistory, useLocation } from 'react-router';
+import AddCandidateBanner from '../components/AddCandidateBanner';
+import SkillView from '../components/SkillView';
+import whatIsTheQueryKey from '../utils/findapi.utlis';
+import data from '../utils/demo';
+import { Avatar } from '@mui/material';
+import { stringAvatar, stringToColor } from '../utils/mui.utils';
 
 const images = {
-  flipkart: "flipkart.png",
-  amazon: "amazon.png",
+  flipkart: 'flipkart.png',
+  amazon: 'amazon.png',
 };
 
 const Find = () => {
-  const [candidate, setCandidate] = useState("");
-  const [candidateSearch, setCandidateSearch] = useState("");
+  const [candidate, setCandidate] = useState('');
+  const [candidateSearch, setCandidateSearch] = useState('');
   const [candidateEmptyError, setCandidateEmptyError] = useState(false);
 
   const location = useLocation();
   const history = useHistory();
 
   const params = new URLSearchParams(location.search);
-  const hideFindBox = params.get("hf");
+  const hideFindBox = params.get('hf');
 
   const goToAddIngo = () => {
     debugger;
@@ -36,7 +38,7 @@ const Find = () => {
       const res = await findCandidate({ [profile]: value });
       if (res.message) {
         setCandidateEmptyError(true);
-        setCandidate("");
+        setCandidate('');
       } else {
         setCandidate(res);
         setCandidateEmptyError(false);
@@ -48,7 +50,7 @@ const Find = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const slug = params.get("find");
+    const slug = params.get('find');
     if (slug) {
       findAndSetCandidate(slug);
     }
@@ -60,8 +62,12 @@ const Find = () => {
     findAndSetCandidate(data?.value);
   };
 
+  const handleEdit = () => {
+    history.push(`/update/${candidate.email}`);
+  };
+
   return (
-    <div className="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-4 px-4 grid grid-cols-6 gap-6">
+    <div className="h-full w-full py-4 px-4">
       {!hideFindBox && (
         <div className="flex flex-col items-center justify-center col-span-2">
           <form
@@ -69,12 +75,12 @@ const Find = () => {
             className="bg-white shadow rounded w-full p-6 mt-4"
           >
             <p
-              tabindex="0"
+              tabIndex="0"
               className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800"
             >
               Search Candidate
             </p>
-            <div className={"mt-8"}>
+            <div className={'mt-8'}>
               <label
                 id="data"
                 className="text-sm font-medium leading-none text-gray-800"
@@ -103,33 +109,53 @@ const Find = () => {
       {candidate?.email && (
         <div
           className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${
-            candidate?.email && hideFindBox ? "col-span-6" : "col-span-4"
+            candidate?.email && hideFindBox ? 'col-span-6' : 'col-span-4'
           }`}
         >
           <div>
-            <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+            <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
               <span clas="text-green-500">
-                <svg
-                  className="h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+                <Avatar
+                  {...stringAvatar(candidate.name || '')}
+                  sx={{
+                    width: 30,
+                    height: 30,
+                    bgcolor: stringToColor(candidate.name || ''),
+                    fontSize: 16,
+                  }}
+                />
               </span>
-              <span className="tracking-wide">{candidate?.name}</span>
+              <span className="tracking-wide capitalize">
+                {candidate?.name}
+              </span>
+              <span onClick={handleEdit} className="cursor-pointer">
+                <i className="fas fa-edit" />
+              </span>
+              {candidate.linkedInProfile && (
+                <a
+                  href={`https://www.linkedin.com/in/${candidate.linkedInProfile}/`}
+                >
+                  <img
+                    className="h-5 w-5 inline-block"
+                    src="/images/linkendin.png"
+                    alt=""
+                  />
+                </a>
+              )}
+              {candidate.gitHub && (
+                <a href={`https://github.com/${candidate.gitHub}/`}>
+                  <img
+                    className="h-5 w-5 inline-block"
+                    src="/images/gitHub.png"
+                    alt=""
+                  />
+                </a>
+              )}
             </div>
             <div className="text-gray-700">
               <div className="grid md:grid-cols-2 text-sm">
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">email</div>
+                  <div className="px-4 py-2 font-semibold">Email</div>
                   <div className="px-4 py-2">
                     <a
                       className="text-blue-800"
@@ -144,21 +170,12 @@ const Find = () => {
                   <div className="px-4 py-2">{candidate?.contact}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">currentSalary</div>
+                  <div className="px-4 py-2 font-semibold">Current Salary</div>
                   <div className="px-4 py-2">{candidate?.currentSalary}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">expectedSalary</div>
+                  <div className="px-4 py-2 font-semibold">Expected Salary</div>
                   <div className="px-4 py-2">{candidate?.expectedSalary}</div>
-                </div>
-
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">linkedInProfile</div>
-                  <div className="px-4 py-2">{candidate?.linkedInProfile}</div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Github</div>
-                  <div className="px-4 py-2">{candidate?.gitHub}</div>
                 </div>
                 {candidate.offersInHand && (
                   <div className="grid grid-cols-2">
@@ -167,19 +184,18 @@ const Find = () => {
                     </div>
                     <div>
                       {candidate.offersInHand.map((offers) => (
-                        <div className={"px-4 py-2 "} id={offers.company}>
-                          Has offer from{" "}
+                        <div className={'px-4 py-2 '} id={offers.company}>
                           <img
                             className="h-5 w-5 inline-block"
                             src={`/images/${
                               images[offers.company.toLowerCase()]
                             }`}
+                            alt=""
                           />
                           <span className="font-semibold">
                             {offers.company}
-                          </span>{" "}
-                          of
-                          <span className="py-2">{offers.offer}</span>
+                          </span>{' '}
+                          of <span className="py-2">{offers.offer}</span>
                         </div>
                       ))}
                     </div>
@@ -195,9 +211,6 @@ const Find = () => {
                 </div>
               </div>
             </div>
-            <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-              Edit Information
-            </button>
           </div>
           <SkillView data={data} />
         </div>
