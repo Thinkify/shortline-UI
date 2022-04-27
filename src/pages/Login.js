@@ -12,7 +12,7 @@ const Login = ({ history }) => {
         await app
           .auth()
           .signInWithEmailAndPassword(email.value, password.value);
-        history.push('/recommanded/candidates');
+        history.push('/');
       } catch (error) {
         alert(error);
       }
