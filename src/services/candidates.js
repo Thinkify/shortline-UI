@@ -59,3 +59,64 @@ export async function createCandidates(postData) {
     return err;
   }
 }
+
+export async function getUserWithSkills(skills) {
+  try {
+    const res = await apiClient.post('/candidates/getAllSkilledCandidate/', {
+      skills,
+    });
+
+    if (res.data.code !== 200) {
+      throw new Error(res.data.message);
+    }
+
+    return res.data;
+  } catch (err) {
+    console.log(fortmatResponse(err.response?.data || err));
+    showErrorNotification(err.message);
+    return err;
+  }
+}
+
+export async function setRecruterCandidateStatus(payload) {
+  try {
+    const res = await apiClient.post(
+      '/recruterCandidateStatus/setRecruterCandidateStatus',
+      payload
+    );
+
+    if (res.data.code !== 200) {
+      throw new Error(res.data.message);
+    }
+
+    return res.data;
+  } catch (error) {
+    console.log(fortmatResponse(error.response?.data || error));
+    showErrorNotification(error.message);
+    return error;
+  }
+}
+
+export async function getRecruterCandidateStatus(
+  recruterEmailId,
+  candidateEmailId
+) {
+  try {
+    const res = await apiClient.get(
+      `/recruterCandidateStatus/getRecruterCandidateStatusController/${recruterEmailId}/${candidateEmailId}`
+    );
+
+    if (res?.data?.code !== 200) {
+      throw new Error(
+        res.data.message || 'Somthing went Wrong getRecruterCandidateStatus'
+      );
+    }
+
+    const result = res?.data?.data;
+    return result;
+  } catch (err) {
+    console.log('getRecruter', fortmatResponse(err.response?.data || err));
+    showErrorNotification(err.message);
+    return err;
+  }
+}

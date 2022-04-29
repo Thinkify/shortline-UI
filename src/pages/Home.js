@@ -4,6 +4,7 @@ import { findCandidate } from '../services/candidates';
 import { useHistory, useLocation } from 'react-router';
 import AddCandidateBanner from '../components/AddCandidateBanner';
 import SkillView from '../components/SkillView';
+import CandidateStatus from '../components/CandidateStatus';
 import whatIsTheQueryKey from '../utils/findapi.utlis';
 import data from '../utils/demo';
 import { Avatar } from '@mui/material';
@@ -212,6 +213,7 @@ const Find = () => {
               </div>
             </div>
           </div>
+          <CandidateStatus candidateEmail={candidate.email} />
           <SkillView data={data} />
         </div>
       )}

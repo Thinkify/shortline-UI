@@ -1,2 +1,3 @@
-const BASE_URL = 'https://candidate-infon.herokuapp.com/api/v1';
+const BASE_URL = 'https://shortline-be.herokuapp.com/api/v1';
+
 export default BASE_URL;
