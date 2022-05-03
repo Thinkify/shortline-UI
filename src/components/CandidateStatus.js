@@ -22,7 +22,7 @@ const CandidateStatus = ({ candidateEmail }) => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [candidateEmail, currentUser.email]);
 
   const handleStatusClicked = async (status) => {
     const payload = {
@@ -33,7 +33,9 @@ const CandidateStatus = ({ candidateEmail }) => {
     try {
       setStatus(status);
       await setRecruterCandidateStatus(payload);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
