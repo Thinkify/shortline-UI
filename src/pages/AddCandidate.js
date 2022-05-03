@@ -32,6 +32,7 @@ const Apply = () => {
     expectedSalary: Yup.string().required('Expected CTC is required'),
     noticePeriod: Yup.string().required('NoticePeriod is required'),
     linkedInProfile: Yup.string().required('LinkedIn is required'),
+    skills: Yup.string().required('Skills are required'),
     gitHub: Yup.string().required('GitHub is required'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
     contact: Yup.string()
@@ -87,6 +88,7 @@ const Apply = () => {
 
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data, null, 2));
+    data.skills = data.skills.split(',');
     const responce = await createCandidates({
       ...data,
     });
@@ -284,6 +286,26 @@ const Apply = () => {
                     />
                     <div className="text-red-500">
                       {errors?.linkedInProfile?.message}
+                    </div>
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="linkedIn-name"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Skills
+                    </label>
+                    <input
+                      type="text"
+                      id="Skills"
+                      autoComplete="given-linkedInProfile"
+                      {...register('skills')}
+                      className={`mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md form-control ${
+                        errors?.skills ? 'is-invalid' : ''
+                      }`}
+                    />
+                    <div className="text-red-500">
+                      {errors?.skills?.message}
                     </div>
                   </div>
                   <div className="col-span-6 sm:col-span-3">
