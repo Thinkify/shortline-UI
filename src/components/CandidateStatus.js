@@ -14,7 +14,7 @@ const CandidateStatus = ({ candidateEmail }) => {
     (async () => {
       try {
         const res = await getRecruterCandidateStatus(
-          currentUser.email || 'ak@thinkify.io',
+          currentUser.email,
           candidateEmail
         );
         setStatus(res.status);
@@ -26,7 +26,7 @@ const CandidateStatus = ({ candidateEmail }) => {
 
   const handleStatusClicked = async (status) => {
     const payload = {
-      recruterEmail: currentUser.email || 'ak@thinkify.io',
+      recruterEmail: currentUser.email,
       candidateEmail: candidateEmail,
       status,
     };
