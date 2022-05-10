@@ -295,8 +295,8 @@ const Update = () => {
                         name="offersInHand"
                         {...register('offersInHand')}
                         className={`mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm form-control disabled:bg-slate-200 disabled:cursor-not-allowed`}
-                        disabled
-                        value={getValues('offersInHand').length || 0}
+                        
+                        defaultValue={getValues('offersInHand').length || 0}
                       >
                         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                           <option key={i} value={i}>
