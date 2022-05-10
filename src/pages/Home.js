@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router";
-import { findCandidate } from "../services/candidates";
-import { useHistory, useLocation } from "react-router";
-import AddCandidateBanner from "../components/AddCandidateBanner";
-import SkillView from "../components/SkillView";
-import whatIsTheQueryKey from "../utils/findapi.utlis";
-import data from "../utils/demo";
-import { Avatar } from "@mui/material";
-import { stringAvatar, stringToColor } from "../utils/mui.utils";
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router';
+import { findCandidate } from '../services/candidates';
+import { useHistory, useLocation } from 'react-router';
+import AddCandidateBanner from '../components/AddCandidateBanner';
+import SkillView from '../components/SkillView';
+import whatIsTheQueryKey from '../utils/findapi.utlis';
+import data from '../utils/demo';
+import { Avatar } from '@mui/material';
+import { stringAvatar, stringToColor } from '../utils/mui.utils';
 
 const images = {
-  flipkart: "flipkart.png",
-  amazon: "amazon.png",
+  flipkart: 'flipkart.png',
+  amazon: 'amazon.png',
 };
 
 const skills = [
@@ -26,15 +26,15 @@ const skills = [
 ];
 
 const Find = () => {
-  const [candidate, setCandidate] = useState("");
-  const [candidateSearch, setCandidateSearch] = useState("");
+  const [candidate, setCandidate] = useState('');
+  const [candidateSearch, setCandidateSearch] = useState('');
   const [candidateEmptyError, setCandidateEmptyError] = useState(false);
 
   const location = useLocation();
   const history = useHistory();
 
   const params = new URLSearchParams(location.search);
-  const hideFindBox = params.get("hf");
+  const hideFindBox = params.get('hf');
 
   const goToAddIngo = () => {
     debugger;
@@ -49,7 +49,7 @@ const Find = () => {
       const res = await findCandidate({ [profile]: value });
       if (res.message) {
         setCandidateEmptyError(true);
-        setCandidate("");
+        setCandidate('');
       } else {
         setCandidate(res);
         setCandidateEmptyError(false);
@@ -61,7 +61,7 @@ const Find = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const slug = params.get("find");
+    const slug = params.get('find');
     if (slug) {
       findAndSetCandidate(slug);
     }
@@ -91,7 +91,7 @@ const Find = () => {
             >
               Search Candidate
             </p>
-            <div className={"mt-8"}>
+            <div className={'mt-8'}>
               <label
                 id="data"
                 className="text-sm font-medium leading-none text-gray-800"
@@ -120,7 +120,7 @@ const Find = () => {
       {candidate?.email && (
         <div
           className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${
-            candidate?.email && hideFindBox ? "col-span-6" : "col-span-4"
+            candidate?.email && hideFindBox ? 'col-span-6' : 'col-span-4'
           }`}
         >
           <div>
@@ -200,7 +200,7 @@ const Find = () => {
                     </div>
                     <div>
                       {candidate.offersInHand.map((offers) => (
-                        <div className={"px-4 py-1 "} id={offers.company}>
+                        <div className={'px-4 py-1 '} id={offers.company}>
                           <img
                             className="h-5 w-5 inline-block"
                             src={`/images/${
@@ -210,7 +210,7 @@ const Find = () => {
                           />
                           <span className="font-semibold">
                             {offers.company}
-                          </span>{" "}
+                          </span>{' '}
                           of <span className="py-2">{offers.offer}</span>
                         </div>
                       ))}
