@@ -15,16 +15,6 @@ const images = {
   amazon: 'amazon.png',
 };
 
-const skills = [
-  "HTML",
-  "CSS",
-  "JS",
-  "Bootstrap",
-  "jQuery",
-  "ReactJS",
-  "Redux",
-  "NextJS",
-];
 
 const Find = () => {
   const [candidate, setCandidate] = useState('');
@@ -77,6 +67,8 @@ const Find = () => {
   const handleEdit = () => {
     history.push(`/update/${candidate.email}`);
   };
+
+  console.log("Candiate Skills", candidate)
 
   return (
     <div className="h-full w-full py-4 px-4">
@@ -226,16 +218,11 @@ const Find = () => {
                     {new Date(candidate?.date).toGMTString().substring(0, 16)}
                   </div>
                 </div>
-
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">YOE</div>
-                  <div className="px-4 py-1">5+ Year of experience</div>
-                </div>
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-1 font-semibold">Skills</div>
                   <div className="px-4 py-1 flex flex-wrap ">
                     {/* <p> */}
-                    {skills.map((skill) => (
+                    {candidate.skills.map((skill) => (
                       <span class="list-none text-white  rounded-lg bg-indigo-700 border p-1">
                         {skill}
                       </span>
