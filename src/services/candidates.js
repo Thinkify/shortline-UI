@@ -60,6 +60,23 @@ export async function createCandidates(postData) {
   }
 }
 
+export async function getRecruterCandidates(email) {
+  try {
+    const res = await apiClient.get(
+      '/recruterCandidateStatus/getAllCandidateStatus/' + email
+    );
+
+    if (res.data.code !== 200) {
+      throw new Error(res.data.message);
+    }
+
+    return res.data;
+  } catch (err) {
+    console.log(fortmatResponse(err.response?.data || err));
+    showErrorNotification(err.message);
+    return err;
+  }
+}
 export async function getUserWithSkills(skills) {
   try {
     const res = await apiClient.post('/candidates/getAllSkilledCandidate/', {

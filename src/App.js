@@ -20,7 +20,7 @@ const App = () => {
           <Header></Header>
           <PrivateRoute exact path="/add" component={AddCandidate} />
           <PrivateRoute exact path="/update/:email" component={Update} />
-          <Route
+          <PrivateRoute
             exact
             path="/recommanded/candidates"
             component={RecommandedCandidates}
