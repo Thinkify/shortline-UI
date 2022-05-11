@@ -65,7 +65,7 @@ const SkillView = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className="px-4">
       <div className={'font-medium text-gray-600'}>
         <div className={'grid grid-cols-12 my-4'}>
           <span className={'col-span-4'}>Skill</span>

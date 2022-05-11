@@ -15,7 +15,7 @@ const images = {
   amazon: 'amazon.png',
 };
 
-const Find = () => {
+const Home = () => {
   const [candidate, setCandidate] = useState('');
   const [candidateSearch, setCandidateSearch] = useState('');
   const [candidateEmptyError, setCandidateEmptyError] = useState(false);
@@ -68,12 +68,12 @@ const Find = () => {
   };
 
   return (
-    <div className="h-full w-full py-4 px-4">
+    <div className="h-full w-full p-2">
       {!hideFindBox && (
         <div className="flex flex-col items-center justify-center col-span-2">
           <form
             onSubmit={handleFind}
-            className="bg-white shadow rounded w-full p-6 mt-4"
+            className="bg-white shadow rounded w-full p-4 mt-4"
           >
             <p
               tabIndex="0"
@@ -109,7 +109,7 @@ const Find = () => {
       )}
       {candidate?.email && (
         <div
-          className={`bg-white overflow-auto h-11/12 p-3 shadow-sm rounded-sm ${
+          className={`bg-white overflow-auto h-11/12 py-3 shadow-sm rounded-sm ${
             candidate?.email && hideFindBox ? 'col-span-6' : 'col-span-4'
           }`}
         >
@@ -224,4 +224,4 @@ const Find = () => {
   );
 };
 
-export default withRouter(Find);
+export default withRouter(Home);

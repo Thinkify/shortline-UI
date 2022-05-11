@@ -39,30 +39,26 @@ const CandidateStatus = ({ candidateEmail }) => {
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center px-4">
       <button
-        className={`bg-sky-200 px-4 py-1 font-semibold rounded-md ${
-          status === candidateStatus.NOT_REVIEWED
-            ? 'border-sky-500 border-4'
-            : ''
+        className={`bg-gray-200 px-4 py-1 font-semibold rounded-md ${
+          status === candidateStatus.NOT_REVIEWED ? '!bg-sky-200' : ''
         }`}
         onClick={() => handleStatusClicked(candidateStatus.NOT_REVIEWED)}
       >
         Not Screened
       </button>
       <button
-        className={`bg-red-200 px-4 py-1 font-semibold rounded-md ${
-          status === candidateStatus.REJECT ? 'border-red-500 border-4' : ''
+        className={`bg-gray-200 px-4 py-1 font-semibold rounded-md ${
+          status === candidateStatus.REJECT ? '!bg-red-200' : ''
         }`}
         onClick={() => handleStatusClicked(candidateStatus.REJECT)}
       >
         Reject
       </button>
       <button
-        className={`bg-green-200 px-4 py-1 font-semibold rounded-md ${
-          status === candidateStatus.SHORTLIST
-            ? 'border-green-500 border-4'
-            : ''
+        className={`bg-gray-200 px-4 py-1 font-semibold rounded-md ${
+          status === candidateStatus.SHORTLIST ? '!bg-green-200' : ''
         }`}
         onClick={() => handleStatusClicked(candidateStatus.SHORTLIST)}
       >
