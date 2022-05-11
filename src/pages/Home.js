@@ -67,6 +67,8 @@ const Home = () => {
     history.push(`/update/${candidate.email}`);
   };
 
+  console.log('Candiate Skills', candidate);
+
   return (
     <div className="h-full w-full p-2">
       {!hideFindBox && (
@@ -114,50 +116,55 @@ const Home = () => {
           }`}
         >
           <div>
-            <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
-              <span clas="text-green-500">
-                <Avatar
-                  {...stringAvatar(candidate.name || '')}
-                  sx={{
-                    width: 30,
-                    height: 30,
-                    bgcolor: stringToColor(candidate.name || ''),
-                    fontSize: 16,
-                  }}
-                />
-              </span>
-              <span className="tracking-wide capitalize">
-                {candidate?.name}
-              </span>
-              <span onClick={handleEdit} className="cursor-pointer">
-                <i className="fas fa-edit" />
-              </span>
-              {candidate.linkedInProfile && (
-                <a
-                  href={`https://www.linkedin.com/in/${candidate.linkedInProfile}/`}
-                >
-                  <img
-                    className="h-5 w-5 inline-block"
-                    src="/images/linkendin.png"
-                    alt=""
+            <div className="flex justify-between">
+              <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
+                <span clas="text-green-500">
+                  <Avatar
+                    {...stringAvatar(candidate.name || '')}
+                    sx={{
+                      width: 30,
+                      height: 30,
+                      bgcolor: stringToColor(candidate.name || ''),
+                      fontSize: 16,
+                    }}
                   />
-                </a>
-              )}
-              {candidate.gitHub && (
-                <a href={`https://github.com/${candidate.gitHub}/`}>
-                  <img
-                    className="h-5 w-5 inline-block"
-                    src="/images/github.png"
-                    alt=""
-                  />
-                </a>
-              )}
+                </span>
+                <span className="tracking-wide capitalize">
+                  {candidate?.name}
+                </span>
+
+                {candidate.linkedInProfile && (
+                  <a
+                    href={`https://www.linkedin.com/in/${candidate.linkedInProfile}/`}
+                  >
+                    <img
+                      className="h-4 mb-1 w-4 inline-block"
+                      src="/images/linkendin.png"
+                      alt=""
+                    />
+                  </a>
+                )}
+                {candidate.gitHub && (
+                  <a href={`https://github.com/${candidate.gitHub}/`}>
+                    <img
+                      className="h-4 w-4 mb-1 inline-block"
+                      src="/images/github.png"
+                      alt=""
+                    />
+                  </a>
+                )}
+              </div>
+              <div className="flex justify-end">
+                <span onClick={handleEdit} className="cursor-pointer">
+                  <i className="fas fa-edit" color="action" />
+                </span>
+              </div>
             </div>
-            <div className="text-gray-700">
+            <div className="text-gray-700 py-4 px-1">
               <div className="grid md:grid-cols-2 text-sm">
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Email</div>
-                  <div className="px-4 py-2">
+                  <div className="px-4 py-1 font-semibold">Email</div>
+                  <div className="px-4 py-1">
                     <a
                       className="text-blue-800"
                       href={`mailto:${candidate?.email}`}
@@ -167,25 +174,25 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Phone</div>
-                  <div className="px-4 py-2">{candidate?.contact}</div>
+                  <div className="px-4 py-1 font-semibold">Phone</div>
+                  <div className="px-4 py-1">{candidate?.contact}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Current Salary</div>
-                  <div className="px-4 py-2">{candidate?.currentSalary}</div>
+                  <div className="px-4 py-1 font-semibold">Current Salary</div>
+                  <div className="px-4 py-1">{candidate?.currentSalary}</div>
                 </div>
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">Expected Salary</div>
-                  <div className="px-4 py-2">{candidate?.expectedSalary}</div>
+                  <div className="px-4 py-1 font-semibold">Expected Salary</div>
+                  <div className="px-4 py-1">{candidate?.expectedSalary}</div>
                 </div>
                 {candidate.offersInHand && (
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">
+                    <div className="px-4 py-1 font-semibold">
                       Offer Candidate have
                     </div>
                     <div>
                       {candidate.offersInHand.map((offers) => (
-                        <div className={'px-4 py-2 '} id={offers.company}>
+                        <div className={'px-4 py-1 '} id={offers.company}>
                           <img
                             className="h-5 w-5 inline-block"
                             src={`/images/${
@@ -203,17 +210,30 @@ const Home = () => {
                   </div>
                 )}
                 <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold">
+                  <div className="px-4 py-1 font-semibold">
                     Last updated time
                   </div>
-                  <div className="px-4 py-2">
+                  <div className="px-4 py-1">
                     {new Date(candidate?.date).toGMTString().substring(0, 16)}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2">
+                  <div className="px-4 py-1 font-semibold">Skills</div>
+                  <div className="px-4 py-1 flex flex-wrap ">
+                    {/* <p> */}
+                    {candidate.skills.map((skill) => (
+                      <span class="list-none text-white  rounded-lg bg-indigo-700 border p-1">
+                        {skill}
+                      </span>
+                    ))}
+                    {/* </p> */}
                   </div>
                 </div>
               </div>
             </div>
+            <CandidateStatus candidateEmail={candidate.email} />
           </div>
-          <CandidateStatus candidateEmail={candidate.email} />
+
           <SkillView data={data} />
         </div>
       )}
