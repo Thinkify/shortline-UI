@@ -109,132 +109,64 @@ const Home = () => {
           </form>
         </div>
       )}
-      {candidate?.email && (
-        <div
-          className={`bg-white overflow-auto h-11/12 py-3 shadow-sm rounded-sm ${
-            candidate?.email && hideFindBox ? 'col-span-6' : 'col-span-4'
-          }`}
-        >
-          <div>
-            <div className="flex justify-between">
-              <div className="flex items-center space-x-2 px-4 font-semibold text-gray-900 leading-8">
-                <span clas="text-green-500">
-                  <Avatar
-                    {...stringAvatar(candidate.name || '')}
-                    sx={{
-                      width: 30,
-                      height: 30,
-                      bgcolor: stringToColor(candidate.name || ''),
-                      fontSize: 16,
-                    }}
-                  />
-                </span>
-                <span className="tracking-wide capitalize">
-                  {candidate?.name}
-                </span>
-
-                {candidate.linkedInProfile && (
-                  <a
-                    href={`https://www.linkedin.com/in/${candidate.linkedInProfile}/`}
-                  >
-                    <img
-                      className="h-4 mb-1 w-4 inline-block"
-                      src="/images/linkendin.png"
-                      alt=""
-                    />
-                  </a>
-                )}
-                {candidate.gitHub && (
-                  <a href={`https://github.com/${candidate.gitHub}/`}>
-                    <img
-                      className="h-4 w-4 mb-1 inline-block"
-                      src="/images/github.png"
-                      alt=""
-                    />
-                  </a>
-                )}
-              </div>
-              <div className="flex justify-end">
-                <span onClick={handleEdit} className="cursor-pointer">
+      {candidate.email && (
+        <div>
+          <div className="flex p-4 gap-2">
+            <div className="flex-[0.1]">
+              <Avatar
+                {...stringAvatar(candidate?.name || '')}
+                sx={{
+                  width: 50,
+                  height: 50,
+                  bgcolor: stringToColor(candidate?.name || ''),
+                  fontSize: 16,
+                }}
+                src="/images/avatar.png"
+              />
+            </div>
+            <div className="flex-1 text-left flex flex-col gap-2">
+              <div className="font-bold text-lg">
+                {candidate?.name}
+                <span onClick={handleEdit} className="cursor-pointer ml-4">
                   <i className="fas fa-edit" color="action" />
                 </span>
               </div>
-            </div>
-            <div className="text-gray-700 py-4 px-1">
-              <div className="grid md:grid-cols-2 text-sm">
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">Email</div>
-                  <div className="px-4 py-1">
-                    <a
-                      className="text-blue-800"
-                      href={`mailto:${candidate?.email}`}
-                    >
-                      {candidate?.email}
-                    </a>
-                  </div>
+              <div className="flex gap-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <img src="/images/email.png" alt="email" /> {candidate?.email}
                 </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">Phone</div>
-                  <div className="px-4 py-1">{candidate?.contact}</div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">Current Salary</div>
-                  <div className="px-4 py-1">{candidate?.currentSalary}</div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">Expected Salary</div>
-                  <div className="px-4 py-1">{candidate?.expectedSalary}</div>
-                </div>
-                {candidate.offersInHand && (
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-1 font-semibold">
-                      Offer Candidate have
-                    </div>
-                    <div>
-                      {candidate.offersInHand.map((offers) => (
-                        <div className={'px-4 py-1 '} id={offers.company}>
-                          <img
-                            className="h-5 w-5 inline-block"
-                            src={`/images/${
-                              images[offers.company.toLowerCase()]
-                            }`}
-                            alt=""
-                          />
-                          <span className="font-semibold">
-                            {offers.company}
-                          </span>{' '}
-                          of <span className="py-2">{offers.offer}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">
-                    Last updated time
-                  </div>
-                  <div className="px-4 py-1">
-                    {new Date(candidate?.date).toGMTString().substring(0, 16)}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-1 font-semibold">Skills</div>
-                  <div className="px-4 py-1 flex flex-wrap ">
-                    {/* <p> */}
-                    {candidate.skills.map((skill) => (
-                      <span class="list-none text-white  rounded-lg bg-indigo-700 border p-1">
-                        {skill}
-                      </span>
-                    ))}
-                    {/* </p> */}
-                  </div>
+                <div className="flex items-center gap-2">
+                  <img src="/images/phone.png" alt="email" />{' '}
+                  {candidate?.contact}
                 </div>
               </div>
+              <CandidateStatus candidateEmail={candidate.email} />
             </div>
-            <CandidateStatus candidateEmail={candidate.email} />
           </div>
-
-          <SkillView data={data} />
+          <div className="p-4 flex flex-col gap-2">
+            <div className="flex">
+              <div className="flex-1">Current Salary</div>
+              <div className="flex-1 font-semibold">
+                {candidate?.currentSalary}
+              </div>
+            </div>
+            <div className="flex">
+              <div className="flex-1">Expected Salary</div>
+              <div className="flex-1 font-semibold">
+                {candidate?.expectedSalary}
+              </div>
+            </div>
+            <div className="flex">
+              <div className="flex-1">Notice period</div>
+              <div className="flex-1 font-semibold">30 days</div>
+            </div>
+            <div className="flex">
+              <div className="flex-1">other offer</div>
+              <div className="flex-1 font-semibold">Flipkart</div>
+            </div>
+            <div className="mt-4">Skill set & test results</div>
+            <SkillView data={data} />
+          </div>
         </div>
       )}
       {candidateEmptyError && (
