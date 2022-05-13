@@ -158,7 +158,9 @@ const Home = () => {
             </div>
             <div className="flex">
               <div className="flex-1">Notice period</div>
-              <div className="flex-1 font-semibold">30 days</div>
+              <div className="flex-1 font-semibold">
+                {candidate.noticePeriod}
+              </div>
             </div>
             <div className="flex">
               <div className="flex-1">other offer</div>

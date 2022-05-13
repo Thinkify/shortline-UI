@@ -32,7 +32,6 @@ const SkillView = ({ data }) => {
   };
 
   const getRatingBar = (rating) => {
-    console.log('rating:', rating);
     if (rating <= 100 && rating > 91)
       return (
         <span
