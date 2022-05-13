@@ -77,6 +77,7 @@ export async function getRecruterCandidates(email) {
     return err;
   }
 }
+
 export async function getUserWithSkills(skills) {
   try {
     const res = await apiClient.post('/candidates/getAllSkilledCandidate/', {

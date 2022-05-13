@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AddCandidate from './pages/AddCandidate';
 import Update from './pages/Update';
-import RecommandedCandidates from './pages/RecommandedCandidates';
+import RecommandedCandidates from './pages/RecommandedCandidate/RecommandedCandidates';
 import { AuthProvider } from './context/Auth';
 import PrivateRoute from './HOC/PrivateRoute';
 import Header from './components/header';
