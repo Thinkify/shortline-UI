@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const status = {
   'NOT REVIEWED': 'text-blue-500 bg-blue-200',
@@ -7,6 +8,7 @@ const status = {
 };
 
 const RecrutersCandidates = ({ candidates }) => {
+  const history = useHistory();
   const [selectedFilter, setSelectedFilter] = useState('ALL');
   const [selectedCandidates, setselectedCandidates] = useState(candidates);
   const handleFilter = (e) => {
@@ -20,6 +22,10 @@ const RecrutersCandidates = ({ candidates }) => {
         setselectedCandidates(candidates.filter((c) => c.status === value));
       }
     }
+  };
+
+  const handleRedirect = (linkedInProfile) => {
+    history.push(`/?find=${linkedInProfile}&hf=true`);
   };
 
   return (
@@ -66,7 +72,12 @@ const RecrutersCandidates = ({ candidates }) => {
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
             >
               <td scope="row" className="px-6 py-4">
-                <div className="font-medium text-gray-900">{candiate.name}</div>
+                <div
+                  className="font-medium text-gray-900 cursor-pointer"
+                  onClick={() => handleRedirect(candiate.linkedInProfile)}
+                >
+                  {candiate.name}
+                </div>
                 <div className="text-sm text-gray-500">{candiate.email}</div>
               </td>
               <td className="px-6 py-4">
